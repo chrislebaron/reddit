@@ -15,7 +15,7 @@ router.get('/:email', async (req, res, next) => {
     return res.json(user);
   }
 
-  return res.json().statusCode(404);
+  return res.status(404).send();
 });
 
 router.post('/', async(req, res, next) => {
@@ -35,7 +35,7 @@ router.post('/', async(req, res, next) => {
   if(!send || typeof send !== 'boolean')
     errors.push("'send' is required and must be boolean value")
   if(errors.length)
-    return res.json(errors).statusCode(400)
+    return res.status(400).send(errors)
 
   // create user
   try {
@@ -49,11 +49,9 @@ router.post('/', async(req, res, next) => {
     })
   } catch(e){
     if(e.message && e.message === 'USER EXISTS'){
-      return res.json({error: "User already exists", user: await db.getUserByEmail(email)}).statusCode(500)
+      return res.status(400).json({error: "User already exists", user: await db.getUserByEmail(email)})
     }
   }
-
-
 })
 
 

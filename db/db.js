@@ -29,11 +29,11 @@ const createUser = async (user) => {
     return getUserByEmail(user.email);
 }
 
-const addSubreddit = async(email, subreddit) => {
+const addSubreddit = async(email, subReddit) => {
     const data = await loadData();
     // throw error if values missing
-    if(!email || !subreddit){
-        throw new Error('addSubredit: "email" and "subreddit" required')
+    if(!email || !subReddit){
+        throw new Error('addSubredit: "email" and "subReddit" required')
     }
 
     // find user
@@ -44,11 +44,11 @@ const addSubreddit = async(email, subreddit) => {
         throw new Error('addSubredit: user not found')
     }
 
-    // check if subreddit already in list, if so just return
-    if(existingUser.subReddits.includes(subreddit))
+    // check if subReddit already in list, if so just return
+    if(existingUser.subReddits.includes(subReddit))
         return
 
-    existingUser.subReddits.push(subreddit);
+    existingUser.subReddits.push(subReddit);
 
     await saveData(data);
 }
@@ -67,6 +67,11 @@ const removeSubreddit = async(email, subreddit) => {
     if(!existingUser){
         throw new Error('removeSubredit: user not found')
     }
+
+    existingUser.subReddits = existingUser.subReddits.filter(existingSubreddit => existingSubreddit !== subreddit)
+
+    await saveData(data);
+
 }
 
 const listUsers = async(email, subreddit) => {
@@ -76,7 +81,8 @@ const listUsers = async(email, subreddit) => {
 
 const getUserByEmail = async (email) => {
     const data = await loadData();
-    return data.users.find(user => user.email === email)
+    const user = data.users.find(user => user.email === email)
+    return user
 }
 
 module.exports = {

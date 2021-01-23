@@ -3,6 +3,7 @@ const path = require('path');
 
 // import routes
 const usersRouter = require('./routes/users');
+const subRedditsRouter = require('./routes/subReddits');
 
 const app = express();
 
@@ -12,8 +13,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// use routes
 app.use('/users', usersRouter);
+// use routes
+app.use('/', subRedditsRouter);
 
 module.exports = app;
 
