@@ -29,6 +29,19 @@ const createUser = async (user) => {
     return getUserByEmail(user.email);
 }
 
+const updateUser = async (email, userData) => {
+    const data = await loadData();
+
+    const user = data.users.find(user => user.email === email)
+    if(!user)
+        return
+
+    for(const [key, value] of Object.entries(userData)){
+        user[key] = value
+    }
+    await saveData(data);
+}
+
 const addSubreddit = async(email, subReddit) => {
     const data = await loadData();
     // throw error if values missing
@@ -87,6 +100,7 @@ const getUserByEmail = async (email) => {
 
 module.exports = {
     createUser,
+    updateUser,
     addSubreddit,
     removeSubreddit,
     listUsers,

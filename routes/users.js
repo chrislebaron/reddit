@@ -30,8 +30,8 @@ router.post('/', async(req, res, next) => {
     errors.push("'firstName' is required and must be a string")
   if(!lastName || typeof lastName !== 'string')
     errors.push("'lastName' is required and must be a string")
-  if(!sendTime || typeof sendTime !== 'string')
-    errors.push("'sendTime' is required and must be a string formatted in 'hh:mm' format")
+  if(sendTime && typeof sendTime !== 'string')
+    errors.push("'sendTime' must be a string formatted in 'hh:mm' format")
   if(!send || typeof send !== 'boolean')
     errors.push("'send' is required and must be boolean value")
   if(errors.length)
@@ -44,7 +44,7 @@ router.post('/', async(req, res, next) => {
       firstName,
       lastName,
       sendTime,
-      send,
+      send: send ? send : "08:00",
       subReddits: []
     })
   } catch(e){
@@ -52,6 +52,29 @@ router.post('/', async(req, res, next) => {
       return res.status(400).json({error: "User already exists", user: await db.getUserByEmail(email)})
     }
   }
+})
+
+router.put('/:email', async (req, res, next) => {
+  const userEmail = req.params.email
+  const {email, firstName, lastName, sendTime, send} = req.body
+
+
+
+  const userData = {
+    ...email && {email},
+    ...firstName && {firstName},
+    ...lastName && {lastName},
+    ...sendTime && {sendTime},
+    ...(send !== null && send !== undefined) && {send},
+  }
+
+  await db.updateUser(userEmail, userData);
+
+  const user = await db.getUserByEmail(email ? email : req.params.email)
+  if(user)
+    return res.json(user);
+  else
+    return res.status(404)
 })
 
 

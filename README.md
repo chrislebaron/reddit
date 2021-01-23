@@ -33,12 +33,17 @@ Example body object
         "email": "chrislebaron@gmail.com",
         "firstName": "Chris",
         "lastName": "LeBaron",
-        "sendTime": "08:00",
-        "send": true,
-        "subReddits": []
+        "sendTime": "08:00", // time on 24 hour clock
+        "send": true, // whether or not to send
     }
 }
 ```
+
+#### Update user
+PUT TO localhost:3000/users/:email-address
+
+The PUT endpoint can handle any or all of the properties the Create user 
+
 
 #### Add a SubReddit to a user
 POST to localhost:3000/users/:email-address/sub-reddits
