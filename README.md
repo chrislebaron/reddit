@@ -1,4 +1,4 @@
-# hear.com backend project
+# Reddit project
 
 ## Setup
 ####Install dependencies
@@ -79,10 +79,10 @@ node email-cron.js
 This project uses a JSON file for the database for simplicity. In a real project I would use a proper database with Sequelize, broken out into separate user and subreddit tables.
 
 ## Validation
-### there were a few endpoints where I just didn't have time to create as much validation as I'd have liked.
+ there were a few endpoints where I just didn't have time to create as much validation as I'd have liked.
 
 ## Error handling
-### Again, because of time, I didn't do much to handle errors or edge cases.
+ Again, because of time, I didn't do much to handle errors or edge cases.
 
 # Handling Slack
 To handle sending to Slack instead of an email, I don't think we'd have to do much different. We could add a new table to the database that would house our "sendTypes". We could then set a sendType to each user, and then when sending, we can choose Email, Slack or some other future sendType that gets added.
