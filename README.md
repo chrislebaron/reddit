@@ -64,3 +64,25 @@ Example body object:
 }
 ```
 
+## Email cron job
+I've created a script that will run every minute, it checks for users that have the current minute set as their send time, get's the data from the Reddit API, and prints out the data needed for each email.
+
+To run it:
+```
+node email-cron.js
+```
+
+
+# What I would have done in a real project
+### Database
+
+This project uses a JSON file for the database for simplicity. In a real project I would use a proper database with Sequelize, broken out into separate user and subreddit tables.
+
+## Validation
+### there were a few endpoints where I just didn't have time to create as much validation as I'd have liked.
+
+## Error handling
+### Again, because of time, I didn't do much to handle errors or edge cases.
+
+# Handling Slack
+To handle sending to Slack instead of an email, I don't think we'd have to do much different. We could add a new table to the database that would house our "sendTypes". We could then set a sendType to each user, and then when sending, we can choose Email, Slack or some other future sendType that gets added.

@@ -43,8 +43,8 @@ router.post('/', async(req, res, next) => {
       email,
       firstName,
       lastName,
-      sendTime,
-      send: send ? send : "08:00",
+      sendTime: sendTime ? sendTime : "08:00",
+      send,
       subReddits: []
     })
   } catch(e){

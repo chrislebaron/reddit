@@ -99,6 +99,7 @@ const getUserByEmail = async (email) => {
 }
 
 module.exports = {
+    loadData,
     createUser,
     updateUser,
     addSubreddit,
